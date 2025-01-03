@@ -1,0 +1,177 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #dfd7e8, #bbc8de);
+    color: #fff;
+}
+
+.container {
+    background-color: #ffffff;
+    color: #333;
+    width: 40%;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #000000;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group select {
+    height: 2rem;
+    width: 7.5rem;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.input-group textarea {
+    height: 5rem;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    resize: vertical;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+    margin-top: 8px;
+}
+
+button {
+    background-color: #5a95ed;
+    color: #fff;
+    width: 50%;
+    display: block;
+    margin: 20px auto;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1e7ce1;
+}
+
+button:focus {
+    outline: none;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    button {
+        width: 70%;
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .input-group textarea {
+        height: 4rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* For small phones (max-width: 480px) */
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .form {
+        gap: 10px;
+    }
+
+    button {
+        width: 80%;
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .input-group textarea {
+        height: 3.5rem;
+        font-size: 0.85rem;
+    }
+
+    label {
+        font-size: 12px;
+    }
+}
+
+/* For extra small devices (max-width: 360px) */
+@media (max-width: 360px) {
+    .container {
+        padding: 8px;
+    }
+
+    h2 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 85%;
+        font-size: 11px;
+        padding: 5px;
+    }
+
+    .input-group textarea {
+        height: 3rem;
+        font-size: 0.8rem;
+    }
+}

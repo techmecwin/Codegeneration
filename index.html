@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data generation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Generate Data</h2>
+        <form class="form">
+            <div class="input-group">
+                <label for="state">Select State:</label>
+                <select id="state">
+                    <option value="MH">Maharashtra</option>
+                    <option value="RJ">Rajasthan</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="imei">IMEI Numbers (Comma-separated, 15 digits each):</label>
+                <textarea id="imei" placeholder="e.g., 123456789012345,678901234567890"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="username">Usernames (Comma-separated):</label>
+                <textarea id="username" placeholder="e.g., user1,user2"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="password">Passwords (Comma-separated):</label>
+                <textarea id="password" placeholder="e.g., pass1,pass2"></textarea>
+            </div>            
+            <button type="button" onclick="submitData()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        async function submitData() {
+            const state = document.getElementById('state').value.trim();
+            const imeiInput = document.getElementById('imei').value.trim();
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
+    
+            const imeiNumbers = imeiInput.split(',').map(num => num.trim());
+            const usernames = usernameInput.split(',').map(name => name.trim());
+            const passwords = passwordInput.split(',').map(pass => pass.trim());
+    
+            const validIMEIs = imeiNumbers.every(num => /^\d{15}$/.test(num));
+            if (!validIMEIs) {
+                alert('Please enter valid IMEI numbers (15 digits each).');
+                return;
+            }
+    
+            if (usernames.length !== passwords.length) {
+                alert('Each username must have a corresponding password.');
+                return;
+            }
+    
+            const data = {
+                imeis: imeiNumbers,
+                states: state, 
+                gov_username: usernames, 
+                gov_password: passwords  
+            };
+    
+            const loader = document.getElementById('loader');
+            if (loader) loader.style.display = 'block';
+    
+            try {
+                const response = await fetch('http://20.204.179.17:8000/firmware/format', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+    
+                const blob = await response.blob();
+        const contentDisposition = response.headers.get('Content-Disposition');
+        const filename = contentDisposition
+            ? contentDisposition.split('filename=')[1].replace(/"/g, '')
+            : 'download.zip';
+
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+
+        alert('File downloaded successfully!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Failed to submit data. Error: ${error.message}`);
+            } finally {
+                if (loader) loader.style.display = 'none';
+            }
+        }
+    </script>
+    
+</body>
+</html>
